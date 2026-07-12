@@ -114,7 +114,7 @@ export default function Navbar() {
         </button>
       </motion.nav>
 
-      {/* Mobile Menu Overlay */}
+
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{

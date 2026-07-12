@@ -35,17 +35,16 @@ export default function SpeakersSection() {
             className="flex gap-8 items-center p-10 rounded-2xl mb-8 border border-[#39FF14]/20 bg-[#39FF14]/[0.05] max-w-3xl mx-auto"
           >
             <div className="w-24 h-24 rounded-full bg-[#39FF14] flex items-center justify-center font-[var(--font-mono)] font-bold text-2xl text-black flex-shrink-0">
-              TE
+              PA
             </div>
             <div>
               <span className="inline-block font-[var(--font-mono)] text-[0.6rem] tracking-[0.2em] uppercase bg-[#39FF14]/15 text-[#39FF14] px-2.5 py-1 rounded mb-3">
                 ★ Keynote Speaker
               </span>
-              <h3 className="text-3xl font-bold mb-1">Tosin Eniolorunda</h3>
-              <p className="text-[#39FF14] font-medium mb-3 text-sm">Founder & CEO, Moniepoint Inc.</p>
+              <h3 className="text-3xl font-bold mb-1">Professor A.I Oluaranti</h3>
+              <p className="text-[#39FF14] font-medium mb-3 text-sm">Professor of Computer Engineering, OAU</p>
               <p className="text-white/55 text-sm leading-relaxed">
-                Founder of Moniepoint — one of Africa's largest fintech companies and a global unicorn.
-                Keynote: "Architecting the Future of the Creator & Tech Economy."
+                A leading expert in the world of computing, Professor Oluaranti has published numerous papers on the impact of technology on society.
               </p>
             </div>
           </motion.div>
