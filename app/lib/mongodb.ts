@@ -16,8 +16,6 @@ const options = {
   // Retry logic for better reliability
   retryWrites: true,
   retryReads: true,
-  // Use stable API version
-  stableApiVersion: '1',
 };
 
 let client: MongoClient;
