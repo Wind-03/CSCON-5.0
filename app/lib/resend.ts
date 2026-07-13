@@ -11,7 +11,7 @@ export async function sendAccessCard(registration: Registration) {
   const html = buildAccessCardHtml(registration);
 
   return resend.emails.send({
-    from: FROM,
+    from: FROM || "nacosoau@gmail.com",
     to: registration.email,
     subject: "🎟️ Your CSCON 5.0 Access Card is here",
     html,
@@ -31,7 +31,7 @@ export async function sendReminder(registration: Registration) {
       : `CSCON 5.0 — thanks for coming`;
 
   return resend.emails.send({
-    from: FROM,
+    from: FROM || "nacosoau@gmail.com",
     to: registration.email,
     subject,
     html,
