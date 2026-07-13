@@ -19,7 +19,7 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) return null;
 
         const db = await getDb();
-        const admin = await db.collection("admins").findOne({
+        const admin = await db?.collection("admins").findOne({
           email: credentials.email.toLowerCase().trim(),
         });
 

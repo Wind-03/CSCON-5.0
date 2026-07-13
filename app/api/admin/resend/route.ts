@@ -24,8 +24,8 @@ export async function POST(req: NextRequest) {
   }
 
   const db = await getDb();
-  const collection = db.collection("registrations");
-  const registration = await collection.findOne({ _id: new ObjectId(body.id) });
+  const collection = db?.collection("registrations");
+  const registration = await collection?.findOne({ _id: new ObjectId(body.id) });
 
   if (!registration) {
     return NextResponse.json({ error: "Registration not found" }, { status: 404 });
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
   }
 
   const now = new Date().toISOString();
-  await collection.updateOne(
+  await collection?.updateOne(
     { _id: new ObjectId(body.id) },
     { $set: { emailSentAt: now }, $inc: { emailSentCount: 1 } }
   );

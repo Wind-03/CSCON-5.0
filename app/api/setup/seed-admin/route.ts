@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
   const db = await getDb();
   const passwordHash = await bcrypt.hash(password, 10);
 
-  const result = await db.collection("admins").updateOne(
+  const result = await db?.collection("admins").updateOne(
     { email: String(email).toLowerCase().trim() },
     {
       $set: {
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
   );
 
   return NextResponse.json({
-    status: result.upsertedCount ? "created" : "updated",
+    status: result?.upsertedCount ? "created" : "updated",
     email: String(email).toLowerCase().trim(),
   });
 }

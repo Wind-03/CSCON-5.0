@@ -10,13 +10,12 @@ export async function GET() {
   }
 
   const db = await getDb();
-  const registrations = await db
-    .collection("registrations")
+  const registrations = await db?.collection("registrations")
     .find({})
     .sort({ createdAt: -1 })
     .toArray();
 
-  const serialized = registrations.map((r) => ({
+  const serialized = registrations?.map((r) => ({
     ...r,
     _id: r._id.toString(),
   }));

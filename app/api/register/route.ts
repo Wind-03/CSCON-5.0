@@ -53,15 +53,15 @@ export async function POST(req: NextRequest) {
 
   try {
     const db = await getDb();
-    const collection = db.collection<Registration>("registrations");
+    const collection = db?.collection<Registration>("registrations");
 
     // If this email already registered, don't create a duplicate —
     // just resend their existing access card.
-    const existing = await collection.findOne({ email });
+    const existing = await collection?.findOne({ email });
 
     if (existing) {
       await sendAccessCard(existing as unknown as Registration);
-      await collection.updateOne(
+      await collection?.updateOne(
         { email },
         { $set: { emailSentAt: new Date() }, $inc: { emailSentCount: 1 } }
       );
@@ -86,11 +86,11 @@ export async function POST(req: NextRequest) {
       reminderSentCount: 0,
     };
 
-    await collection.insertOne(registration as never);
+    await collection?.insertOne(registration as never);
 
     try {
       await sendAccessCard(registration as Registration);
-      await collection.updateOne(
+      await collection?.updateOne(
         { email },
         { $set: { emailSentAt: new Date().toISOString() }, $inc: { emailSentCount: 1 } }
       );
