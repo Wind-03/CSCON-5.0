@@ -21,7 +21,7 @@ export default function RegistrationsTable() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/admin/registrations");
+      const res = await fetch("/api/admin/registration");
       if (!res.ok) throw new Error("Failed to load registrations");
       const data = await res.json();
       setRegistrations(data.registrations);
