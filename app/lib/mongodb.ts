@@ -5,7 +5,20 @@ if (!process.env.MONGODB_URI) {
 }
 
 const uri = process.env.MONGODB_URI;
-const options = {};
+const options = {
+  // Force TLS 1.2+ and proper SSL handling
+  tls: true,
+  tlsAllowInvalidCertificates: false, // Set to true ONLY for testing
+  // Increase timeouts for serverless environments
+  connectTimeoutMS: 10000,
+  socketTimeoutMS: 45000,
+  serverSelectionTimeoutMS: 10000,
+  // Retry logic for better reliability
+  retryWrites: true,
+  retryReads: true,
+  // Use stable API version
+  stableApiVersion: '1',
+};
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
@@ -16,8 +29,6 @@ declare global {
 }
 
 if (process.env.NODE_ENV === "development") {
-  // Reuse the client across hot-reloads in dev so we don't open new
-  // connections on every file save.
   if (!global._mongoClientPromise) {
     client = new MongoClient(uri, options);
     global._mongoClientPromise = client.connect();
