@@ -5,13 +5,13 @@ import { daysUntilEvent, EVENT_DATE_LABEL } from "@/app/lib/event";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const FROM = process.env.RESEND_FROM_EMAIL;
+const FROM = process.env.RESEND_FROM_EMAIL!;
 
 export async function sendAccessCard(registration: Registration) {
   const html = buildAccessCardHtml(registration);
 
   return resend.emails.send({
-    from: FROM!,
+    from: FROM,
     to: registration.email,
     subject: "🎟️ Your CSCON 5.0 Access Card is here",
     html,
@@ -31,7 +31,7 @@ export async function sendReminder(registration: Registration) {
       : `CSCON 5.0 — thanks for coming`;
 
   return resend.emails.send({
-    from: FROM!,
+    from: FROM,
     to: registration.email,
     subject,
     html,
