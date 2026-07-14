@@ -27,7 +27,7 @@ export default function HeroSection() {
   }, []);
 
   const metaItems = [
-    { label: "Date", value: "July 8, 2026" },
+    { label: "Date", value: "July 21, 2026" },
     { label: "Venue", value: "Oduduwa Hall, OAU" },
     { label: "Expected Reach", value: "1,500+ Attendees" },
   ];

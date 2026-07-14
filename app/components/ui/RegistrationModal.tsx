@@ -291,7 +291,7 @@ export default function RegistrationModal({
               Check your inbox, {form.fullName.split(" ")[0]}.
             </h3>
             <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, lineHeight: 1.7, maxWidth: 400, margin: "0 auto" }}>
-              Your CSCON 5.0 access card is on its way to <strong style={{ color: "#fff" }}>{form.email}</strong>. Bring it with you on July 8th.
+              Your CSCON 5.0 access card is on its way to <strong style={{ color: "#fff" }}>{form.email}</strong>. Bring it with you on July 21th.
             </p>
             <button onClick={handleClose} className="cta-button" style={{ marginTop: 28, justifyContent: "center" }}>
               Done

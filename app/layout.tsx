@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "CSCON 5.0 — Create. Build. Scale.",
-  description: "The OAU Creator, Business & Tech Summit. July 8, 2026 · Oduduwa Hall, OAU. NACOS presents the flagship gathering where creators, builders and founders converge.",
+  description: "The OAU Creator, Business & Tech Summit. July 21, 2026 · Oduduwa Hall, OAU. NACOS presents the flagship gathering where creators, builders and founders converge.",
 };
 
 export default function RootLayout({

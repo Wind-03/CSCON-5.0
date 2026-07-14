@@ -146,7 +146,7 @@ function buildAccessCardHtml(reg: Registration): string {
             <td style="padding:24px 12px 0 12px; text-align:center;">
               <p style="font-size:13px; color:rgba(255,255,255,0.45); line-height:1.6; margin:0;">
                 Save this email or take a screenshot of your code — you'll need it to check in at Trust Hall.
-                See you July 8th. Let's build, create, and scale.
+                See you July 21th. Let's build, create, and scale.
               </p>
               <p style="font-size:11px; color:rgba(255,255,255,0.25); margin-top:20px;">
                 NACOS OAU · CSCON 5.0 · Ile-Ife, Nigeria

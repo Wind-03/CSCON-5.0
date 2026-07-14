@@ -849,7 +849,7 @@ export default function Home() {
               {
                 val: "1,500+",
                 label: "In-room attendees",
-                sub: "at Oduduwa Hall, OAU on July 8",
+                sub: "at Trust Hall, OAU on July 21",
               },
               {
                 val: "1M+",
@@ -1094,7 +1094,7 @@ export default function Home() {
                 marginBottom: 48,
               }}
             >
-              July 8, 2026 · Oduduwa Hall, OAU · Ile-Ife, Nigeria
+              July 21, 2026 · Trust Hall, OAU · Ile-Ife, Nigeria
             </p>
           </FadeIn>
           <div style={{ maxWidth: 720 }}>
@@ -1613,10 +1613,10 @@ export default function Home() {
               </div>
               <div style={{ textAlign: "right" }}>
                 <div style={{ fontWeight: 800, fontSize: 16 }}>
-                  July 8, 2026
+                  July 21, 2026
                 </div>
                 <div style={{ fontSize: 13, opacity: 0.7 }}>
-                  Oduduwa Hall · OAU
+                  Trust Hall · OAU
                 </div>
               </div>
             </div>
@@ -1648,7 +1648,7 @@ export default function Home() {
           </div>
         </div>
         <div style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>
-          Nigerian Association of Computing Students · OAU Chapter · July 8,
+          Nigerian Association of Computing Students · OAU Chapter · July 21,
           2026
         </div>
         <div style={{ display: "flex", gap: 16 }}>
