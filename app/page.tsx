@@ -18,31 +18,31 @@ const BackgroundScene = dynamic(
 
 const speakers = [
   {
-    initials: "LW",
-    name: "Layi Wasabi",
-    role: "Comedian, Actor & Digital Creator",
+    initials: "IB",
+    name: "Ismail Bala",
+    role: "Videographer & Digital Creator",
     track: "Create",
     color: "#C580FF",
     bg: "#1a0a2a",
-    note: "Nigeria's fastest-rising digital content creator",
+    note: "An OAU creative with a desire to push boundaries.",
   },
   {
-    initials: "KE",
-    name: "Korty EO",
-    role: "Storyteller, Creator & Host",
+    initials: "FA",
+    name: "Faith Adeyinka",
+    role: "Storyteller, Designer & Creator",
     track: "Create",
     color: "#C580FF",
     bg: "#1a0a2a",
-    note: "Fast-growing, deeply engaged audience",
+    note: "An OAU student combining career and content-creation",
   },
   {
-    initials: "SK",
-    name: "Salem King",
-    role: "Skit Maker & Content Creator",
+    initials: "BB",
+    name: "Olatunbosun BodeBosun",
+    role: "Brand Designer",
     track: "Create",
     color: "#C580FF",
     bg: "#1a0a2a",
-    note: "Character-driven storytelling",
+    note: "",
   },
   {
     initials: "CO",
@@ -54,31 +54,31 @@ const speakers = [
     note: "Fintech & lifestyle products",
   },
   {
-    initials: "PO",
-    name: "Prosper Otemuyiwa",
-    role: "Developer Advocate",
+    initials: "TO",
+    name: "Taslim Oseni",
+    role: "Senior Developer @ Cowrywise",
     track: "Build",
     color: "#6BB5FF",
     bg: "#0a1020",
-    note: "Respected global tech leader",
+    note: "Respected tech leader",
   },
   {
-    initials: "RA",
-    name: "Razaq Ahmed, CFA",
-    role: "Co-founder & CEO, Cowrywise",
-    track: "Scale",
+    initials: "IF",
+    name: "Iyanu Falaye",
+    role: "Senior Software Engineer @ Moniepoint",
+    track: "Build",
     color: "#F0C550",
     bg: "#1a1200",
     note: "Scaling wealth & investing for a generation",
   },
   {
-    initials: "TG",
-    name: "Temie Giwa-Tubosun",
-    role: "Founder, LifeBank",
+    initials: "PA",
+    name: "Prof. Aina",
+    role: "Current Jamb Registrar",
     track: "Scale",
     color: "#F0C550",
     bg: "#1a1200",
-    note: "Award-winning healthtech founder",
+    note: "Professor of COmputing @ OAu and the current JAMB registrar",
   },
 ];
 
@@ -274,7 +274,7 @@ export default function Home() {
         <div className="max-container content-layer" style={{ zIndex: 2 }}>
           <div style={{ maxWidth: 720 }}>
             <div className="eyebrow">
-              NACOS OAU · 5th Edition · July 8, 2026
+              NACOS OAU · 5th Edition · July 21, 2026
             </div>
             <h1
               className="display-heading"
@@ -323,9 +323,9 @@ export default function Home() {
               }}
             >
               {[
-                { label: "Date", value: "July 8, 2026" },
-                { label: "Venue", value: "Oduduwa Hall, OAU" },
-                { label: "Expected", value: "1,500+ Attendees" },
+                { label: "Date", value: "July 21, 2026" },
+                { label: "Venue", value: "Trust Hall, OAU" },
+                { label: "Expected", value: "500+ Attendees" },
               ].map((item) => (
                 <div key={item.label}>
                   <div
@@ -589,7 +589,7 @@ export default function Home() {
                 items: [
                   "Fundraising & growth",
                   "Building a startup team",
-                  "Scaling beyond campus",
+                  "Scaling Careers beyond campus",
                 ],
                 accent: "#F0C550",
                 bg: "rgba(240,165,0,0.05)",
@@ -895,68 +895,6 @@ export default function Home() {
               </FadeIn>
             ))}
           </div>
-          <FadeIn delay={0.2}>
-            <div style={{ marginTop: 56 }}>
-              <div
-                style={{
-                  fontSize: 12,
-                  color: "rgba(255,255,255,0.4)",
-                  fontWeight: 700,
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                  marginBottom: 24,
-                }}
-              >
-                Our marketing engine
-              </div>
-              <div className="grid-3">
-                {[
-                  {
-                    phase: "Phase 1 · Buzz",
-                    desc: "Teaser campaigns & speaker reveals across social platforms.",
-                  },
-                  {
-                    phase: "Phase 2 · Partnerships",
-                    desc: "Campus brands & vendors get slots to showcase and sell their products.",
-                  },
-                  {
-                    phase: "Phase 3 · Push",
-                    desc: "Countdowns, giveaways & activations targeting 1M+ reach.",
-                  },
-                ].map((p) => (
-                  <div
-                    key={p.phase}
-                    style={{
-                      padding: "20px",
-                      background: "rgba(255,255,255,0.02)",
-                      border: "1px solid rgba(255,255,255,0.06)",
-                      borderRadius: 10,
-                    }}
-                  >
-                    <div
-                      style={{
-                        color: "var(--cyan)",
-                        fontWeight: 700,
-                        fontSize: 12,
-                        marginBottom: 8,
-                      }}
-                    >
-                      {p.phase}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: 13,
-                        color: "rgba(255,255,255,0.55)",
-                        lineHeight: 1.6,
-                      }}
-                    >
-                      {p.desc}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </FadeIn>
         </div>
       </section>
 
@@ -1010,7 +948,7 @@ export default function Home() {
                   flexShrink: 0,
                 }}
               >
-                TE
+                AO
               </div>
               <div>
                 <div
@@ -1032,7 +970,7 @@ export default function Home() {
                     marginBottom: 4,
                   }}
                 >
-                  Tosin Eniolorunda
+                  Prof A.I Oluwaranti
                 </div>
                 <div
                   style={{
@@ -1042,7 +980,7 @@ export default function Home() {
                     marginBottom: 12,
                   }}
                 >
-                  Founder & CEO, Moniepoint Inc.
+                  Professor Computing Engineering OAU
                 </div>
                 <p
                   style={{
@@ -1052,11 +990,12 @@ export default function Home() {
                     maxWidth: 560,
                   }}
                 >
-                  Founder of Moniepoint — one of Africa's largest fintech
-                  companies and a global unicorn powering millions of
-                  businesses. His keynote,{" "}
+                  His research spans wireless networks, cybersecurity, IoT and 
+                  engineering education, and he currently serves as Director of 
+                  OAU's Linkages and Partnership Office — bridging the university 
+                  with industry and global partners.
                   <em>
-                    "Architecting the Future of the Creator & Tech Economy,"
+                    "The Code of Ambition: From OAU Lecture Halls to Global Impact"
                   </em>{" "}
                   anchors CSCON 5.0.
                 </p>
