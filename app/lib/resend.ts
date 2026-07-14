@@ -110,11 +110,11 @@ function buildAccessCardHtml(reg: Registration): string {
                       <tr>
                         <td width="50%" style="padding-bottom:16px;">
                           <div style="font-size:10px; color:rgba(255,255,255,0.4); font-weight:700; letter-spacing:2px; text-transform:uppercase;">Date</div>
-                          <div style="font-size:14px; color:#ffffff; font-weight:600; margin-top:4px;">July 8, 2026</div>
+                          <div style="font-size:14px; color:#ffffff; font-weight:600; margin-top:4px;">July 21, 2026</div>
                         </td>
                         <td width="50%" style="padding-bottom:16px;">
                           <div style="font-size:10px; color:rgba(255,255,255,0.4); font-weight:700; letter-spacing:2px; text-transform:uppercase;">Venue</div>
-                          <div style="font-size:14px; color:#ffffff; font-weight:600; margin-top:4px;">Oduduwa Hall, OAU</div>
+                          <div style="font-size:14px; color:#ffffff; font-weight:600; margin-top:4px;">Trust Hall, OAU</div>
                         </td>
                       </tr>
                     </table>
@@ -145,7 +145,7 @@ function buildAccessCardHtml(reg: Registration): string {
           <tr>
             <td style="padding:24px 12px 0 12px; text-align:center;">
               <p style="font-size:13px; color:rgba(255,255,255,0.45); line-height:1.6; margin:0;">
-                Save this email or take a screenshot of your code — you'll need it to check in at Oduduwa Hall.
+                Save this email or take a screenshot of your code — you'll need it to check in at Trust Hall.
                 See you July 8th. Let's build, create, and scale.
               </p>
               <p style="font-size:11px; color:rgba(255,255,255,0.25); margin-top:20px;">
@@ -218,7 +218,7 @@ function buildReminderHtml(reg: Registration, days: number): string {
                   <td style="padding:24px 28px 4px 28px;" align="center">
                     <p style="font-size:14px; color:rgba(255,255,255,0.65); line-height:1.7; margin:0;">
                       Hey ${escapeHtml(firstName)} — CSCON 5.0 lands on <strong style="color:#ffffff;">${EVENT_DATE_LABEL}</strong> at
-                      <strong style="color:#ffffff;">Oduduwa Hall, OAU</strong>. You're registered on the
+                      <strong style="color:#ffffff;">Trust Hall, OAU</strong>. You're registered on the
                       <span style="color:${track.accent}; font-weight:700;">${escapeHtml(reg.track)} track</span> — get ready to build, create, and scale.
                     </p>
                   </td>
