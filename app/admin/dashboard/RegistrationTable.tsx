@@ -13,7 +13,7 @@ export default function RegistrationsTable() {
   const [search, setSearch] = useState("");
   const [trackFilter, setTrackFilter] = useState<Track | "All">("All");
   const [resendState, setResendState] = useState<Record<string, ResendState>>({});
-  const [remindState, setRemindState] = useState<Record<string, ResendState>>({});
+  const [remindState, setRemindState] = useState<Record<string, RemindState>>({});
 
   useEffect(() => {
     fetchRegistrations();
@@ -52,7 +52,7 @@ export default function RegistrationsTable() {
     }
   }
     async function handleRemind(id: string) {
-    setResendState((s) => ({ ...s, [id]: "sending" }));
+    setRemindState((s) => ({ ...s, [id]: "reminding" }));
     try {
       const res = await fetch("/api/admin/remind", {
         method: "POST",
@@ -60,7 +60,7 @@ export default function RegistrationsTable() {
         body: JSON.stringify({ id }),
       });
       if (!res.ok) throw new Error();
-      setRemindState((s) => ({ ...s, [id]: "sent" }));
+      setRemindState((s) => ({ ...s, [id]: "reminded" }));
       fetchRegistrations();
       setTimeout(() => setRemindState((s) => ({ ...s, [id]: "idle" })), 3000);
     } catch {
@@ -162,6 +162,7 @@ export default function RegistrationsTable() {
               {filtered.map((r) => {
                 const track = TRACK_COLORS[r.track];
                 const state = resendState[r._id || ""] || "idle";
+                const reminderState = remindState[r._id || ""] || "idle";
                 return (
                   <tr key={r._id} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
                     <td style={cellStyle}>
@@ -218,7 +219,7 @@ export default function RegistrationsTable() {
                     <td style={cellStyle}>
                       <button
                         onClick={() => r._id && handleRemind(r._id)}
-                        disabled={state === "reminding"}
+                        disabled={reminderState === "reminding"}
                         style={{
                           padding: "6px 12px",
                           borderRadius: 6,
@@ -226,12 +227,12 @@ export default function RegistrationsTable() {
                           fontWeight: 700,
                           cursor: "pointer",
                           border: "1px solid rgba(57,255,20,0.3)",
-                          background: state === "reminding" ? "var(--green)" : "transparent",
-                          color: state === "reminding" ? "#000" : "var(--green)",
+                          background: reminderState === "reminding" ? "var(--green)" : "transparent",
+                          color: reminderState === "reminding" ? "#000" : "var(--green)",
                           whiteSpace: "nowrap",
                         }}
                       >
-                        {state === "reminding" ? "Reminding…" : state === "reminded" ? "Reminded ✓" : state === "error" ? "Failed — retry" : "Remind Attendee"}
+                        {reminderState === "reminding" ? "Reminding…" : reminderState === "reminded" ? "Reminded ✓" : reminderState === "error" ? "Failed — retry" : "Remind Attendee"}
                       </button>
                     </td>
                   </tr>
