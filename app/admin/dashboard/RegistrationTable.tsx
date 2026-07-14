@@ -4,6 +4,7 @@ import { signOut } from "next-auth/react";
 import { TRACK_COLORS, type Registration, type Track } from "@/app/types/registration";
 
 type ResendState = "idle" | "sending" | "sent" | "error";
+type RemindState = "idle" | "reminding" | "reminded" | "error";
 
 export default function RegistrationsTable() {
   const [registrations, setRegistrations] = useState<Registration[]>([]);
@@ -12,6 +13,7 @@ export default function RegistrationsTable() {
   const [search, setSearch] = useState("");
   const [trackFilter, setTrackFilter] = useState<Track | "All">("All");
   const [resendState, setResendState] = useState<Record<string, ResendState>>({});
+  const [remindState, setRemindState] = useState<Record<string, ResendState>>({});
 
   useEffect(() => {
     fetchRegistrations();
@@ -47,6 +49,23 @@ export default function RegistrationsTable() {
     } catch {
       setResendState((s) => ({ ...s, [id]: "error" }));
       setTimeout(() => setResendState((s) => ({ ...s, [id]: "idle" })), 3000);
+    }
+  }
+    async function handleRemind(id: string) {
+    setResendState((s) => ({ ...s, [id]: "sending" }));
+    try {
+      const res = await fetch("/api/admin/remind", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      if (!res.ok) throw new Error();
+      setRemindState((s) => ({ ...s, [id]: "sent" }));
+      fetchRegistrations();
+      setTimeout(() => setRemindState((s) => ({ ...s, [id]: "idle" })), 3000);
+    } catch {
+      setRemindState((s) => ({ ...s, [id]: "error" }));
+      setTimeout(() => setRemindState((s) => ({ ...s, [id]: "idle" })), 3000);
     }
   }
 
@@ -194,6 +213,25 @@ export default function RegistrationsTable() {
                         }}
                       >
                         {state === "sending" ? "Sending…" : state === "sent" ? "Sent ✓" : state === "error" ? "Failed — retry" : "Resend card"}
+                      </button>
+                    </td>
+                    <td style={cellStyle}>
+                      <button
+                        onClick={() => r._id && handleRemind(r._id)}
+                        disabled={state === "reminding"}
+                        style={{
+                          padding: "6px 12px",
+                          borderRadius: 6,
+                          fontSize: 11,
+                          fontWeight: 700,
+                          cursor: "pointer",
+                          border: "1px solid rgba(57,255,20,0.3)",
+                          background: state === "reminding" ? "var(--green)" : "transparent",
+                          color: state === "reminding" ? "#000" : "var(--green)",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {state === "reminding" ? "Reminding…" : state === "reminded" ? "Reminded ✓" : state === "error" ? "Failed — retry" : "Remind Attendee"}
                       </button>
                     </td>
                   </tr>

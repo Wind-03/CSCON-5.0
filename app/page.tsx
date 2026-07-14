@@ -1122,7 +1122,7 @@ export default function Home() {
               </FadeIn>
             ))}
           </div>
-          <FadeIn delay={0.3}>
+          {/* <FadeIn delay={0.3}>
             <div style={{ marginTop: 48 }}>
               <div
                 style={{
@@ -1194,7 +1194,7 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          </FadeIn>
+          </FadeIn> */}
         </div>
       </section>
 
