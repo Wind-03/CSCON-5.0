@@ -82,7 +82,7 @@ export default function RegistrationsTable() {
     setPostponeProgress(null);
     
     try {
-      const res = await fetch("/api/admin/send-postponement", {
+      const res = await fetch("/api/admin/postpone", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
