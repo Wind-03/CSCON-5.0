@@ -5,6 +5,7 @@ import { TRACK_COLORS, type Registration, type Track } from "@/app/types/registr
 
 type ResendState = "idle" | "sending" | "sent" | "error";
 type RemindState = "idle" | "reminding" | "reminded" | "error";
+type PostponeState = "idle" | "sending" | "sent" | "error";
 
 export default function RegistrationsTable() {
   const [registrations, setRegistrations] = useState<Registration[]>([]);
@@ -14,6 +15,8 @@ export default function RegistrationsTable() {
   const [trackFilter, setTrackFilter] = useState<Track | "All">("All");
   const [resendState, setResendState] = useState<Record<string, ResendState>>({});
   const [remindState, setRemindState] = useState<Record<string, RemindState>>({});
+  const [postponeState, setPostponeState] = useState<PostponeState>("idle");
+  const [postponeProgress, setPostponeProgress] = useState<{ total: number; sent: number; failed: number } | null>(null);
 
   useEffect(() => {
     fetchRegistrations();
@@ -51,7 +54,8 @@ export default function RegistrationsTable() {
       setTimeout(() => setResendState((s) => ({ ...s, [id]: "idle" })), 3000);
     }
   }
-    async function handleRemind(id: string) {
+
+  async function handleRemind(id: string) {
     setRemindState((s) => ({ ...s, [id]: "reminding" }));
     try {
       const res = await fetch("/api/admin/remind", {
@@ -66,6 +70,49 @@ export default function RegistrationsTable() {
     } catch {
       setRemindState((s) => ({ ...s, [id]: "error" }));
       setTimeout(() => setRemindState((s) => ({ ...s, [id]: "idle" })), 3000);
+    }
+  }
+
+  async function handlePostpone() {
+    if (!confirm("Are you sure you want to send postponement notifications to ALL registered attendees?")) {
+      return;
+    }
+
+    setPostponeState("sending");
+    setPostponeProgress(null);
+    
+    try {
+      const res = await fetch("/api/admin/send-postponement", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Failed to send postponement emails");
+      }
+      
+      const data = await res.json();
+      setPostponeProgress({
+        total: data.total,
+        sent: data.success,
+        failed: data.failed || 0,
+      });
+      
+      setPostponeState("sent");
+      fetchRegistrations();
+      
+      setTimeout(() => {
+        setPostponeState("idle");
+        setPostponeProgress(null);
+      }, 5000);
+    } catch (error) {
+      console.error("Postponement error:", error);
+      setPostponeState("error");
+      setTimeout(() => {
+        setPostponeState("idle");
+        setPostponeProgress(null);
+      }, 5000);
     }
   }
 
@@ -125,10 +172,33 @@ export default function RegistrationsTable() {
         <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
           {filtered.length} of {registrations.length}
         </div>
+        
+        {/* Postpone All Button */}
+        <button
+          onClick={handlePostpone}
+          disabled={postponeState === "sending"}
+          style={{
+            marginLeft: "auto",
+            padding: "8px 16px",
+            borderRadius: 6,
+            fontSize: 12,
+            fontWeight: 700,
+            cursor: postponeState === "sending" ? "not-allowed" : "pointer",
+            border: "1px solid rgba(255,170,0,0.4)",
+            background: postponeState === "sent" ? "var(--green)" : postponeState === "error" ? "#ff6b6b" : "rgba(255,170,0,0.1)",
+            color: postponeState === "sent" ? "#000" : postponeState === "error" ? "#fff" : "#ffaa00",
+            opacity: postponeState === "sending" ? 0.6 : 1,
+          }}
+        >
+          {postponeState === "sending" ? "Sending..." : 
+           postponeState === "sent" ? "✓ Sent!" : 
+           postponeState === "error" ? "❌ Failed" : 
+           "📅 Postpone All"}
+        </button>
+
         <button
           onClick={() => signOut({ callbackUrl: "/admin/login" })}
           style={{
-            marginLeft: "auto",
             padding: "8px 14px",
             borderRadius: 6,
             fontSize: 12,
@@ -143,6 +213,31 @@ export default function RegistrationsTable() {
         </button>
       </div>
 
+      {/* Postpone Progress */}
+      {postponeProgress && (
+        <div style={{ 
+          padding: "12px 20px", 
+          background: "rgba(255,170,0,0.08)", 
+          borderBottom: "1px solid rgba(255,170,0,0.15)",
+          display: "flex",
+          gap: 20,
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}>
+          <span style={{ color: "rgba(255,255,255,0.7)", fontSize: 13 }}>
+            📊 Postponement sent to <strong style={{ color: "#39FF14" }}>{postponeProgress.sent}</strong> attendees
+            {postponeProgress.failed > 0 && (
+              <span style={{ color: "#ff6b6b", marginLeft: 8 }}>
+                ❌ {postponeProgress.failed} failed
+              </span>
+            )}
+          </span>
+          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
+            Total: {postponeProgress.total}
+          </span>
+        </div>
+      )}
+
       {loading && <div style={{ padding: 40, textAlign: "center", color: "rgba(255,255,255,0.4)" }}>Loading…</div>}
       {error && <div style={{ padding: 40, textAlign: "center", color: "#ff6b6b" }}>{error}</div>}
 
@@ -151,7 +246,7 @@ export default function RegistrationsTable() {
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
               <tr style={{ textAlign: "left", color: "rgba(255,255,255,0.4)", fontSize: 11, textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                {["Name", "Email", "Phone", "Institution", "Role", "Track", "Code", "Registered", "Email", ""].map((h) => (
+                {["Name", "Email", "Phone", "Institution", "Role", "Track", "Code", "Registered", "Email Status", "Actions"].map((h) => (
                   <th key={h} style={{ padding: "12px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)", whiteSpace: "nowrap" }}>
                     {h}
                   </th>
@@ -192,12 +287,13 @@ export default function RegistrationsTable() {
                       {r.emailSentAt ? (
                         <span style={{ color: "rgba(255,255,255,0.4)" }}>
                           Sent ×{r.emailSentCount}
+                          {r.reminderSentAt && <span style={{ marginLeft: 6 }}>🔔</span>}
                         </span>
                       ) : (
                         <span style={{ color: "#ff6b6b" }}>Not sent</span>
                       )}
                     </td>
-                    <td style={cellStyle}>
+                    <td style={{ ...cellStyle, display: "flex", gap: 6, padding: "8px 16px" }}>
                       <button
                         onClick={() => r._id && handleResend(r._id)}
                         disabled={state === "sending"}
@@ -213,10 +309,8 @@ export default function RegistrationsTable() {
                           whiteSpace: "nowrap",
                         }}
                       >
-                        {state === "sending" ? "Sending…" : state === "sent" ? "Sent ✓" : state === "error" ? "Failed — retry" : "Resend card"}
+                        {state === "sending" ? "Sending…" : state === "sent" ? "✓" : state === "error" ? "Retry" : "Card"}
                       </button>
-                    </td>
-                    <td style={cellStyle}>
                       <button
                         onClick={() => r._id && handleRemind(r._id)}
                         disabled={reminderState === "reminding"}
@@ -227,12 +321,12 @@ export default function RegistrationsTable() {
                           fontWeight: 700,
                           cursor: "pointer",
                           border: "1px solid rgba(57,255,20,0.3)",
-                          background: reminderState === "reminding" ? "var(--green)" : "transparent",
-                          color: reminderState === "reminding" ? "#000" : "var(--green)",
+                          background: reminderState === "reminded" ? "var(--green)" : "transparent",
+                          color: reminderState === "reminded" ? "#000" : "var(--green)",
                           whiteSpace: "nowrap",
                         }}
                       >
-                        {reminderState === "reminding" ? "Reminding…" : reminderState === "reminded" ? "Reminded ✓" : reminderState === "error" ? "Failed — retry" : "Remind Attendee"}
+                        {reminderState === "reminding" ? "…" : reminderState === "reminded" ? "✓" : reminderState === "error" ? "Retry" : "Remind"}
                       </button>
                     </td>
                   </tr>
