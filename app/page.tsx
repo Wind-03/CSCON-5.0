@@ -274,7 +274,7 @@ export default function Home() {
         <div className="max-container content-layer" style={{ zIndex: 2 }}>
           <div style={{ maxWidth: 720 }}>
             <div className="eyebrow">
-              NACOS OAU · 5th Edition · July 21, 2026
+              NACOS OAU · 5th Edition · September 3rd, 2026
             </div>
             <h1
               className="display-heading"
@@ -323,8 +323,8 @@ export default function Home() {
               }}
             >
               {[
-                { label: "Date", value: "July 21, 2026" },
-                { label: "Venue", value: "Trust Hall, OAU" },
+                { label: "Date", value: "September 3, 2026" },
+                { label: "Venue", value: "ACE Conference Hall, OAU" },
                 { label: "Expected", value: "500+ Attendees" },
               ].map((item) => (
                 <div key={item.label}>
@@ -849,7 +849,7 @@ export default function Home() {
               {
                 val: "1,500+",
                 label: "In-room attendees",
-                sub: "at Trust Hall, OAU on July 21",
+                sub: "at Trust Hall, OAU on September 3rd",
               },
               {
                 val: "1M+",
@@ -1094,7 +1094,7 @@ export default function Home() {
                 marginBottom: 48,
               }}
             >
-              July 21, 2026 · Trust Hall, OAU · Ile-Ife, Nigeria
+              September 3, 2026 · ACE Conference Hall, OAU · Ile-Ife, Nigeria
             </p>
           </FadeIn>
           <div style={{ maxWidth: 720 }}>
@@ -1613,7 +1613,7 @@ export default function Home() {
               </div>
               <div style={{ textAlign: "right" }}>
                 <div style={{ fontWeight: 800, fontSize: 16 }}>
-                  July 21, 2026
+                  September 3rd, 2026
                 </div>
                 <div style={{ fontSize: 13, opacity: 0.7 }}>
                   Trust Hall · OAU
@@ -1648,7 +1648,7 @@ export default function Home() {
           </div>
         </div>
         <div style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>
-          Nigerian Association of Computing Students · OAU Chapter · July 21,
+          Nigerian Association of Computing Students · OAU Chapter · September 3rd,
           2026
         </div>
         <div style={{ display: "flex", gap: 16 }}>

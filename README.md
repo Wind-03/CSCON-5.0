@@ -59,7 +59,7 @@ app/
 
 ## Event Details
 
-- **Date:** July 21, 2026
+- **Date:** September 3rd, 2026
 - **Venue:** Oduduwa Hall, OAU, Ile-Ife, Nigeria
 - **Organiser:** NACOS OAU (Nigerian Association of Computing Students)
 - **Contact:** nacosoau@gmail.com

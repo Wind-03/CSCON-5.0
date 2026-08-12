@@ -1,7 +1,7 @@
 // Update this in one place if the event date changes — the reminder email
 // countdown is calculated from it at send time.
 export const EVENT_DATE = new Date("2026-07-21T09:00:00+01:00"); // Africa/Lagos (WAT)
-export const EVENT_DATE_LABEL = "July 21, 2026";
+export const EVENT_DATE_LABEL = "September 3rd, 2026";
 
 /**
  * Days remaining until the event, rounded up so "today" still reads as
