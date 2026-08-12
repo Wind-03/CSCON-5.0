@@ -849,7 +849,7 @@ export default function Home() {
               {
                 val: "1,500+",
                 label: "In-room attendees",
-                sub: "at Trust Hall, OAU on September 3rd",
+                sub: "at ACE Conference Hall, OAU on September 3rd",
               },
               {
                 val: "1M+",
@@ -1616,7 +1616,7 @@ export default function Home() {
                   September 3rd, 2026
                 </div>
                 <div style={{ fontSize: 13, opacity: 0.7 }}>
-                  Trust Hall · OAU
+                  ACE Conference Hall · OAU
                 </div>
               </div>
             </div>
