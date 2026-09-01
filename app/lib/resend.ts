@@ -214,6 +214,16 @@ function buildReminderHtml(reg: Registration, days: number): string {
   const countdownLabel =
     days > 1 ? `${days} days to go` : days === 1 ? "Tomorrow" : days === 0 ? "Today" : "It's been a blast";
 
+  // Map track names to their corresponding taglines
+  const TRACK_TAGLINES: Record<string, string> = {
+    Build: "time to turn your ideas into things you can actually ship.",
+    Create: "bring your ideas to life and give them a shape people notice.",
+    Scale: "here's your chance to take what already works and push it further.",
+  };
+
+  // Get matching tagline or fallback if track doesn't match standard keys
+  const trackTagline = TRACK_TAGLINES[reg.track] || "get ready to innovate and connect.";
+
   return `
 <!DOCTYPE html>
 <html>
@@ -263,7 +273,7 @@ function buildReminderHtml(reg: Registration, days: number): string {
                     <p style="font-size:14px; color:rgba(255,255,255,0.65); line-height:1.7; margin:0;">
                       Hey ${escapeHtml(firstName)} — CSCON 5.0 lands on <strong style="color:#ffffff;">${EVENT_DATE_LABEL}</strong> at
                       <strong style="color:#ffffff;">ACE conference Hall, OAU</strong>. You're registered on the
-                      <span style="color:${track.accent}; font-weight:700;">${escapeHtml(reg.track)} track</span> — get ready to build, create, and scale.
+                      <span style="color:${track.accent}; font-weight:700;">${escapeHtml(reg.track)} track</span> — ${escapeHtml(trackTagline)}
                     </p>
                   </td>
                 </tr>
@@ -282,6 +292,19 @@ function buildReminderHtml(reg: Registration, days: number): string {
                     </div>
                   </td>
                 </tr>
+
+                <!-- Invite CTA Section -->
+                <tr>
+                  <td style="padding:0 28px 28px 28px;" align="center">
+                    <div style="background:rgba(255,255,255,0.03); border-radius:12px; padding:16px; border:1px solid rgba(255,255,255,0.06);">
+                      <p style="font-size:13px; color:rgba(255,255,255,0.7); line-height:1.5; margin:0 0 10px 0;">
+                        Know someone who should be in the room? Send them the link so they can register too:
+                      </p>
+                      <a href="https://csconoau.xyz" style="color:#39FF14; font-size:13px; font-weight:700; text-decoration:none; word-break:break-all;">https://csconoau.xyz</a>
+                    </div>
+                  </td>
+                </tr>
+
               </table>
             </td>
           </tr>
