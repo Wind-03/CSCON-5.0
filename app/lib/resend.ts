@@ -38,6 +38,51 @@ export async function sendReminder(registration: Registration) {
   });
 }
 
+export async function sendBatchReminders(registrations: Registration[]) {
+  const days = daysUntilEvent();
+  
+  // Build subject based on days
+  const subject =
+    days > 1
+      ? `⏳ ${days} days to CSCON 5.0`
+      : days === 1
+      ? `⏳ Tomorrow: CSCON 5.0`
+      : days === 0
+      ? `🎉 Today's the day — CSCON 5.0`
+      : `CSCON 5.0 — thanks for coming`;
+
+  // Prepare all emails
+  const emailPromises = registrations.map(async (registration) => {
+    const html = buildReminderHtml(registration, days);
+    
+    return resend.emails.send({
+      from: FROM || "CSCON Team <noreply@csconoau.xyz>",
+      to: registration.email,
+      subject,
+      html,
+    });
+  });
+
+  // Execute all emails in parallel with error handling
+  const results = await Promise.allSettled(emailPromises);
+  
+  // Count successes and failures
+  const successful = results.filter(result => result.status === 'fulfilled').length;
+  const failed = results.filter(result => result.status === 'rejected').length;
+  
+  return {
+    total: registrations.length,
+    success: successful,
+    failed: failed,
+    errors: results
+      .filter(result => result.status === 'rejected')
+      .map((result, index) => ({
+        email: registrations[index].email,
+        error: (result as PromiseRejectedResult).reason
+      }))
+  };
+}
+
 function buildAccessCardHtml(reg: Registration): string {
   const track = TRACK_COLORS[reg.track];
   const firstName = reg.fullName.split(" ")[0];

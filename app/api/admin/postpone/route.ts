@@ -5,7 +5,7 @@ import { ObjectId } from "mongodb";
 import { authOptions } from "@/app/lib/auth";
 import { getDb } from "@/app/lib/mongodb";
 import type { Registration } from "@/app/types/registration";
-import { sendPostponementBatchWithRetry } from "@/app/lib/resend";
+import { sendPostponementBatchWithRetry, sendBatchReminders } from "@/app/lib/resend";
 
 export async function POST(request: NextRequest) {
   try {
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     console.log(`📧 Sending postponement emails to ${registrations.length} attendees`);
 
     // 4. Send batch emails
-    const results = await sendPostponementBatchWithRetry(registrations);
+    const results = await sendBatchReminders(registrations);
 
     const updatePromises = registrations.map((reg: Registration) =>
       collection.updateOne(
