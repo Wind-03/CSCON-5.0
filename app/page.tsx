@@ -278,13 +278,13 @@ export default function Home() {
             </div>
             <h1
               className="display-heading"
-              style={{
-                marginBottom: 20,
-                marginTop: 12,
-                fontSize: "clamp(3.5rem, 9vw, 7.5rem)",
-              }}
+              // style={{
+              //   marginBottom: 20,
+              //   marginTop: 12,
+              //   fontSize: "clamp(3.5rem, 9vw, 7.5rem)",
+              // }}
             >
-              CS<span className="accent-green">CON</span> 5.0
+              CS<span className="">CON</span> 5.0
             </h1>
             <div
               style={{
@@ -299,7 +299,7 @@ export default function Home() {
                 marginBottom: 28,
               }}
             >
-              Create. Build. Scale.
+              Build. Create. Scale.
             </div>
             <p
               style={{
@@ -347,8 +347,8 @@ export default function Home() {
               ))}
             </div>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <a href="#packages" className="cta-button">
-                Become a Sponsor →
+              <a href="#register" className="cta-button">
+                Register now →
               </a>
               <a href="#about" className="cta-button cta-button-outline">
                 Learn More
@@ -554,22 +554,8 @@ export default function Home() {
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
             {[
               {
-                pill: "CREATE",
-                num: "01",
-                title: "The Creator Track",
-                tagline: "From 0 to Influence: growing an audience that pays.",
-                items: [
-                  "Content strategy & storytelling",
-                  "Monetization & brand deals",
-                  "Building a personal brand",
-                ],
-                accent: "#C580FF",
-                bg: "rgba(123,47,190,0.05)",
-                border: "rgba(123,47,190,0.2)",
-              },
-              {
                 pill: "BUILD",
-                num: "02",
+                num: "01",
                 title: "The Builder Track",
                 tagline: "Breaking into tech & building real products.",
                 items: [
@@ -581,6 +567,21 @@ export default function Home() {
                 bg: "rgba(26,110,191,0.05)",
                 border: "rgba(26,110,191,0.2)",
               },
+              {
+                pill: "CREATE",
+                num: "02",
+                title: "The Creator Track",
+                tagline: "From 0 to Influence: growing an audience that pays.",
+                items: [
+                  "Content strategy & storytelling",
+                  "Monetization & brand deals",
+                  "Building a personal brand",
+                ],
+                accent: "#C580FF",
+                bg: "rgba(123,47,190,0.05)",
+                border: "rgba(123,47,190,0.2)",
+              },
+              
               {
                 pill: "SCALE",
                 num: "03",
@@ -786,7 +787,7 @@ export default function Home() {
               <button
                 onClick={() => setRegistrationOpen(true)}
                 className="cta-button"
-                style={{ margin: "0 auto" }}
+                style={{ margin: "12px auto" }}
               >
                 Open Registration Form →
               </button>
@@ -794,7 +795,7 @@ export default function Home() {
           </FadeIn>
 
           <FadeIn delay={0.2}>
-            <div className="mt-8 text-center text-white/40 text-sm">
+            <div className="mt-12 text-center text-white/40 text-sm">
               <p>
                 Spaces are limited. Register early to secure your spot at CSCON
                 5.0.

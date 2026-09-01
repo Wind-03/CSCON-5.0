@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Logo from "@/app/assets/logo-stacked.png"
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -12,7 +13,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu when clicking a link
+  
   const handleNavClick = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMobileMenuOpen(false);
@@ -39,25 +40,7 @@ export default function Navbar() {
           className="flex items-center gap-1.5 sm:gap-2 md:gap-3 font-[var(--font-mono)] text-xs sm:text-sm font-bold tracking-wide cursor-pointer"
           style={{ textDecoration: "none" }}
         >
-          <div
-            className="logo-cs"
-            style={{
-              background: "var(--green)",
-              color: "black",
-              padding: "2px 5px sm:3px 6px md:4px 8px",
-              borderRadius: "4px",
-              fontSize: "9px sm:10px md:12px",
-              fontWeight: "bold",
-            }}
-          >
-            CS
-          </div>
-          <span className="logo-text hidden xs:inline">
-            CS<span style={{ color: "var(--green)" }}>CON</span> 5.0
-          </span>
-          <span className="logo-text xs:hidden">
-            CS<span style={{ color: "var(--green)" }}>CON</span>
-          </span>
+          <img src={Logo.src} alt="CSCON Logo" className="w-6 sm:w-10 md:w-14" />
         </a>
 
         {/* Desktop Navigation */}
@@ -80,10 +63,10 @@ export default function Navbar() {
           </nav>
 
           <button
-            onClick={() => handleNavClick("contact")}
-            className="cta-button text-xs px-4 py-2 lg:px-5 lg:py-2.5 bg-[var(--green)] text-black font-bold rounded transition-all duration-200 hover:bg-white hover:text-black"
+            onClick={() => handleNavClick("register")}
+            className="cta-button text-xs px-4 py-2 lg:px-5 lg:py-2.5 bg-white text-black font-bold rounded transition-all duration-200 hover:bg-white hover:text-black"
           >
-            Sponsor Us
+            Register Now
           </button>
         </div>
 

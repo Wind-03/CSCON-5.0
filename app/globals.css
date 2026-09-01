@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #050505;
+  --bg: #151514;
   --white: #ffffff;
-  --green: #39FF14;
+  --green: #007932;
   --purple: #7B2FBE;
   --blue: #1A6EBF;
   --gold: #F0A500;
@@ -26,7 +26,7 @@ html {
 body {
   background: var(--bg);
   color: var(--white);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-header);
   overflow-x: hidden;
 }
 
@@ -83,9 +83,9 @@ body {
 
 .display-heading {
   font-size: clamp(2.5rem, 7vw, 6rem);
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1.0;
-  letter-spacing: -0.03em;
+  letter-spacing: -2.5%;
 }
 
 .accent-green {
@@ -285,7 +285,7 @@ body {
   align-items: center;
   gap: 8px;
   padding: 12px 28px;
-  background: var(--green);
+  background: white;
   color: #000;
   font-weight: 800;
   font-size: 13px;
@@ -296,6 +296,7 @@ body {
   cursor: pointer;
   text-decoration: none;
   transition: opacity 0.2s, transform 0.2s;
+  font-family: var(--font-text),;
 }
 
 
