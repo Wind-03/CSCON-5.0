@@ -41,7 +41,6 @@ export async function sendReminder(registration: Registration) {
 export async function sendBatchReminders(registrations: Registration[]) {
   const days = daysUntilEvent();
   
-  // Build subject based on days
   const subject =
     days > 1
       ? `⏳ ${days} days to CSCON 5.0`
@@ -49,7 +48,7 @@ export async function sendBatchReminders(registrations: Registration[]) {
       ? `⏳ Tomorrow: CSCON 5.0`
       : days === 0
       ? `🎉 Today's the day — CSCON 5.0`
-      : `CSCON 5.0 — thanks for coming`;
+      : `CSCON 5.0 — Just Sending a Reminder to the best event this year`;
 
   // Prepare all emails
   const emailPromises = registrations.map(async (registration) => {
