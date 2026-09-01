@@ -48,7 +48,7 @@ export async function sendBatchReminders(registrations: Registration[]) {
       ? `⏳ Tomorrow: CSCON 5.0`
       : days === 0
       ? `🎉 Today's the day — CSCON 5.0`
-      : `CSCON 5.0 — Just Sending a Reminder to the best event this year`;
+      : `CSCON 5.0 — Thanks for Coming`;
 
   // Prepare all emails
   const emailPromises = registrations.map(async (registration) => {
