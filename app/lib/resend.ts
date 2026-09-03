@@ -25,10 +25,10 @@ export async function sendReminder(registration: Registration) {
     days > 1
       ? `⏳ ${days} days to CSCON 5.0`
       : days === 1
-      ? `⏳ Tomorrow: CSCON 5.0`
-      : days === 0
-      ? `🎉 Today's the day — CSCON 5.0`
-      : `CSCON 5.0 — thanks for coming`;
+        ? `⏳ Tomorrow: CSCON 5.0`
+        : days === 0
+          ? `🎉 Today's the day — CSCON 5.0`
+          : `CSCON 5.0 — thanks for coming`;
 
   return resend.emails.send({
     from: FROM || "CSCON Team <noreply@csconoau.xyz>",
@@ -40,20 +40,20 @@ export async function sendReminder(registration: Registration) {
 
 export async function sendBatchReminders(registrations: Registration[]) {
   const days = daysUntilEvent();
-  
-  const subject =
-    days > 1
-      ? `⏳ ${days} days to CSCON 5.0`
-      : days === 1
-      ? `⏳ Tomorrow: CSCON 5.0`
-      : days === 0
-      ? `🎉 Today's the day — CSCON 5.0`
-      : `CSCON 5.0 — Thanks for Coming`;
+
+  const subject =` 🎉 Today's the day — CSCON 5.0` 
+    // days > 1
+    //   ? `⏳ ${days} days to CSCON 5.0`
+    //   : days === 1
+    //     ? `⏳ Tomorrow: CSCON 5.0`
+    //     : days === 0
+    //       ? `🎉 Today's the day — CSCON 5.0`
+    //       : `CSCON 5.0 — Thanks for Coming`;
 
   // Prepare all emails
   const emailPromises = registrations.map(async (registration) => {
     const html = buildReminderHtml(registration, days);
-    
+
     return resend.emails.send({
       from: FROM || "CSCON Team <noreply@csconoau.xyz>",
       to: registration.email,
@@ -64,21 +64,25 @@ export async function sendBatchReminders(registrations: Registration[]) {
 
   // Execute all emails in parallel with error handling
   const results = await Promise.allSettled(emailPromises);
-  
+
   // Count successes and failures
-  const successful = results.filter(result => result.status === 'fulfilled').length;
-  const failed = results.filter(result => result.status === 'rejected').length;
-  
+  const successful = results.filter(
+    (result) => result.status === "fulfilled",
+  ).length;
+  const failed = results.filter(
+    (result) => result.status === "rejected",
+  ).length;
+
   return {
     total: registrations.length,
     success: successful,
     failed: failed,
     errors: results
-      .filter(result => result.status === 'rejected')
+      .filter((result) => result.status === "rejected")
       .map((result, index) => ({
         email: registrations[index].email,
-        error: (result as PromiseRejectedResult).reason
-      }))
+        error: (result as PromiseRejectedResult).reason,
+      })),
   };
 }
 
@@ -211,8 +215,14 @@ function buildReminderHtml(reg: Registration, days: number): string {
   const track = TRACK_COLORS[reg.track];
   const firstName = reg.fullName.split(" ")[0];
 
-  const countdownLabel =
-    days > 1 ? `${days} days to go` : days === 1 ? "Tomorrow" : days === 0 ? "Today" : "It's been a blast";
+  const countdownLabel =`0`
+    // days > 1
+    //   ? `${days} days to go`
+    //   : days === 1
+    //     ? "Tomorrow"
+    //     : days === 0
+    //       ? "Today"
+    //       : "It's been a blast";
 
   // Map track names to their corresponding taglines
   const TRACK_TAGLINES: Record<string, string> = {
@@ -222,7 +232,8 @@ function buildReminderHtml(reg: Registration, days: number): string {
   };
 
   // Get matching tagline or fallback if track doesn't match standard keys
-  const trackTagline = TRACK_TAGLINES[reg.track] || "get ready to innovate and connect.";
+  const trackTagline =
+    TRACK_TAGLINES[reg.track] || "get ready to innovate and connect.";
 
   return `
 <!DOCTYPE html>
@@ -254,10 +265,10 @@ function buildReminderHtml(reg: Registration, days: number): string {
                   <td style="padding:32px 28px 8px 28px;" align="center">
                     <div style="font-size:12px; font-weight:800; letter-spacing:2px; color:rgba(255,255,255,0.4); text-transform:uppercase;">CSCON 5.0</div>
                     <div style="font-size:44px; font-weight:900; color:#39FF14; letter-spacing:-0.02em; margin-top:10px; line-height:1;">
-                      ${days >= 0 ? days : "🎉"}
+                      ${"🎉"}
                     </div>
                     <div style="font-size:14px; font-weight:700; color:#ffffff; letter-spacing:1px; text-transform:uppercase; margin-top:6px;">
-                      ${escapeHtml(countdownLabel)}
+                      ${"Today"}
                     </div>
                   </td>
                 </tr>
@@ -326,10 +337,9 @@ function buildReminderHtml(reg: Registration, days: number): string {
 `;
 }
 
-
 export async function sendPostponementBatchWithRetry(
-  registrations: Registration[], 
-  maxRetries = 2
+  registrations: Registration[],
+  maxRetries = 2,
 ) {
   const results = {
     success: 0,
@@ -338,13 +348,13 @@ export async function sendPostponementBatchWithRetry(
   };
 
   const BATCH_SIZE = 50;
-  
+
   for (let i = 0; i < registrations.length; i += BATCH_SIZE) {
     const batch = registrations.slice(i, i + BATCH_SIZE);
-    
+
     const promises = batch.map(async (registration) => {
       let lastError = "";
-      
+
       for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
           const html = buildPostponementHtml(registration);
@@ -357,37 +367,37 @@ export async function sendPostponementBatchWithRetry(
           return { success: true, email: registration.email };
         } catch (error) {
           lastError = error instanceof Error ? error.message : "Unknown error";
-          
+
           // Wait before retry (exponential backoff)
           if (attempt < maxRetries) {
-            await new Promise(resolve => setTimeout(resolve, 2000 * attempt));
+            await new Promise((resolve) => setTimeout(resolve, 2000 * attempt));
           }
         }
       }
-      
-      return { 
-        success: false, 
-        email: registration.email, 
-        error: lastError 
+
+      return {
+        success: false,
+        email: registration.email,
+        error: lastError,
       };
     });
 
     const batchResults = await Promise.all(promises);
-    
+
     batchResults.forEach((result) => {
       if (result.success) {
         results.success++;
       } else {
         results.failed++;
-        results.errors.push({ 
-          email: result.email, 
-          error: result.error || "Failed after retries" 
+        results.errors.push({
+          email: result.email,
+          error: result.error || "Failed after retries",
         });
       }
     });
 
     if (i + BATCH_SIZE < registrations.length) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
 
@@ -395,7 +405,7 @@ export async function sendPostponementBatchWithRetry(
   console.log(`📊 Postponement email summary:
   ✅ Success: ${results.success}
   ❌ Failed: ${results.failed}
-  ${results.errors.length > 0 ? `⚠️ Errors: ${results.errors.map(e => `${e.email}: ${e.error}`).join(', ')}` : ''}
+  ${results.errors.length > 0 ? `⚠️ Errors: ${results.errors.map((e) => `${e.email}: ${e.error}`).join(", ")}` : ""}
   `);
 
   return results;
