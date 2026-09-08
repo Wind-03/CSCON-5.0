@@ -1,7 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Logo from "@/app/assets/logo-stacked.png"
+import Logo from "@/app/assets/logo-stacked.png";
+
+type NavItem = {
+  label: string;
+  id?: string;
+  href?: string;
+};
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -13,10 +19,37 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  
-  const handleNavClick = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const navItems: NavItem[] = [
+    { label: "About", id: "about" },
+    { label: "Tracks", id: "tracks" },
+    { label: "Speakers", id: "speakers" },
+    { label: "Packages", id: "packages" },
+    { label: "Resources", href: "/resources" },
+  ];
+
+  const handleNavClick = (item: NavItem | string) => {
     setMobileMenuOpen(false);
+    if (typeof item === "string") {
+      if (window.location.pathname === "/") {
+        document.getElementById(item)?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.location.href = `/#${item}`;
+      }
+      return;
+    }
+
+    if (item.href) {
+      window.location.href = item.href;
+      return;
+    }
+
+    if (item.id) {
+      if (window.location.pathname === "/") {
+        document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.location.href = `/#${item.id}`;
+      }
+    }
   };
 
   return (
@@ -46,16 +79,11 @@ export default function Navbar() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6 lg:gap-8 desktop-nav">
           <nav className="flex gap-4 lg:gap-6">
-            {[
-              { label: "About", id: "about" },
-              { label: "Tracks", id: "tracks" },
-              { label: "Speakers", id: "speakers" },
-              { label: "Packages", id: "packages" },
-            ].map((item) => (
+            {navItems.map((item) => (
               <button
-                key={item.id}
-                onClick={() => handleNavClick(item.id)}
-                className="text-white/60 hover:text-[var(--green)] text-xs lg:text-sm font-medium transition-colors duration-200 tracking-wide"
+                key={item.label}
+                onClick={() => handleNavClick(item)}
+                className="text-white/60 hover:text-[var(--green)] text-xs lg:text-sm font-medium transition-colors duration-200 tracking-wide cursor-pointer"
               >
                 {item.label}
               </button>
@@ -64,7 +92,7 @@ export default function Navbar() {
 
           <button
             onClick={() => handleNavClick("register")}
-            className="cta-button text-xs px-4 py-2 lg:px-5 lg:py-2.5 bg-white text-black font-bold rounded transition-all duration-200 hover:bg-white hover:text-black"
+            className="cta-button text-xs px-4 py-2 lg:px-5 lg:py-2.5 bg-white text-black font-bold rounded transition-all duration-200 hover:bg-white hover:text-black cursor-pointer"
           >
             Register Now
           </button>
@@ -97,7 +125,6 @@ export default function Navbar() {
         </button>
       </motion.nav>
 
-
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{
@@ -112,15 +139,10 @@ export default function Navbar() {
         }}
       >
         <div className="flex flex-col gap-4 sm:gap-5 items-center">
-          {[
-            { label: "About", id: "about" },
-            { label: "Tracks", id: "tracks" },
-            { label: "Speakers", id: "speakers" },
-            { label: "Packages", id: "packages" },
-          ].map((item) => (
+          {navItems.map((item) => (
             <button
-              key={item.id}
-              onClick={() => handleNavClick(item.id)}
+              key={item.label}
+              onClick={() => handleNavClick(item)}
               className="w-full text-center text-white/80 hover:text-[var(--green)] text-base sm:text-lg font-medium transition-colors duration-200 py-2 sm:py-2.5"
             >
               {item.label}
